@@ -4,20 +4,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
 
-        // Configure Chrome for headless execution
+        // Automatically setup ChromeDriver
+        WebDriverManager.chromedriver().setup();
+
+        // Headless Chrome options (Jenkins safe)
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");       // modern headless mode
-        options.addArguments("--no-sandbox");         // required in Jenkins/Linux
-        options.addArguments("--disable-dev-shm-usage"); // prevents crashes
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
-        options.addArguments("--window-size=1920,1080"); // optional but useful
+        options.addArguments("--window-size=1920,1080");
 
         WebDriver driver = new ChromeDriver(options);
 
@@ -29,8 +30,9 @@ public class App {
             driver.findElement(By.id("login-button")).click();
 
             System.out.println("Page Title: " + driver.getTitle());
+
         } finally {
-            driver.quit(); // always close browser
+            driver.quit();
         }
     }
 }
