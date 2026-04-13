@@ -7,21 +7,15 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Manasvij12/MyMavenSelenimumApp01.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean package'
             }
         }
 
         stage('Run Selenium') {
             steps {
-                sh 'mvn exec:java -Dexec.mainClass="App"'
+                sh 'java -jar target/MyMavenSeleniumApp01-1.0-SNAPSHOT.jar'
             }
         }
     }
